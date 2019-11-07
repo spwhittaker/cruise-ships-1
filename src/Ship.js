@@ -12,6 +12,6 @@ this.atSea = true;
 }
 };
 
-
+//test
 
 module.exports = Ship;
