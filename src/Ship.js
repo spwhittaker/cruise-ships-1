@@ -1,28 +1,30 @@
+const Itinerary = require('../src/Itinerary.js');
 
 class Ship {
-    constructor(name, startingPort)
-    {
+    constructor(name, itin) {
     this.name = name;
-    this.currentPort = startingPort;
+//    if (itin.ports === undefined) {
+        
+//    }
+   
+    this.currentPort = itin.ports[0];
     this.atSea = false;
     this.portsVisited = [];
+    this.itinerary = itin;
     //this.port = port;
 }
 
 setSail() {
-this.atSea = true;
-this.portsVisited.push(this.currentPort);
-this.currentPort = '';
+    this.atSea = true;
+    this.portsVisited.push(this.currentPort);
+    this.currentPort = '';
 };
 
-<<<<<<< HEAD
-dock(newPort) {
-this.atSea = false;
-this.currentPort = newPort;
-}};
+dock() {
+    this.atSea = false;
+    this.currentPort = this.itinerary.ports[1];
+}
+};
 
-=======
-//test
->>>>>>> d8d5826117a0a2342b860e247c0581d561801ee0
 
 module.exports = Ship;

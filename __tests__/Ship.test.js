@@ -1,39 +1,42 @@
-const Ship = require('../src/Ship.js');
+const Ship = require('../src/Ship.js')
 const Port = require('../src/Port.js');
+const Itinerary = require('../src/Itinerary.js');
 
-
+const testPort1 = new Port("testPort1");
+const testPort2 = new Port("testPort2");
+const testItin = new Itinerary([testPort1, testPort2])
 
 describe("ship is created", () => {
     //beforeEach(() => {
     it("creates an object", () => {
-        const hmsGoodTimes = new Ship('Good Times', 'Berlin');
+        const hmsGoodTimes = new Ship('Good Times', testItin);
         expect(hmsGoodTimes).toBeInstanceOf(Object);
     });
 
     it("has a starting point for a ship", () => {
-        const hmsGoodTimes = new Ship('Good Times', 'Berlin');
+        const hmsGoodTimes = new Ship('Good Times', testItin);
         expect(hmsGoodTimes.currentPort).toBeTruthy();
     });
 });
 
 describe("ship has a Port object", () => {
     it("has a starting point for a ship", () => {
-        const moscowPort = new Port('Moscow');
-        const hmsGoodTimes = new Ship('Good Times', moscowPort);
+        const ports = new Itinerary([new Port('Moscow')]);
+        const hmsGoodTimes = new Ship('Good Times', ports);
         expect(hmsGoodTimes.currentPort).toBeInstanceOf(Object);
     });
 });
 
 describe("Checks ports status", () => {
     it("Ports are logged to portsVisited", () => {
-        const moscowPort = new Port('Moscow');
-        const hmsGoodTimes = new Ship('Good Times', moscowPort);
+        const ports = new Itinerary([new Port('Moscow')]);
+        const hmsGoodTimes = new Ship('Good Times', ports);
         hmsGoodTimes.setSail();
         expect(hmsGoodTimes.portsVisited.length).toBeGreaterThan(0);
     })
     it("Current port empty when at sea", () => {
-        const moscowPort = new Port('Moscow');
-        const hmsGoodTimes = new Ship('Good Times', moscowPort);
+        const ports = new Itinerary([new Port('Moscow')]);
+        const hmsGoodTimes = new Ship('Good Times', ports);
         hmsGoodTimes.setSail();
         expect(hmsGoodTimes.currentPort).toBe('');
     })
@@ -41,66 +44,37 @@ describe("Checks ports status", () => {
 
 describe("ship sets sail", () => {
     it("it is at sea after setSail", () => {
-        const hmsGoodTimes = new Ship('Good Times', 'UAE');
+        const ports = new Itinerary([new Port('UAE')]);
+        const hmsGoodTimes = new Ship('Good Times', ports);
         expect(hmsGoodTimes.setSail).toBeTruthy();
     })
     it("at sea", () => {
-        const hmsGoodTimes = new Ship('Good Times', 'Andorra')
+        const ports = new Itinerary([new Port('Andorra')]);
+        const hmsGoodTimes = new Ship('Good Times', ports)
         hmsGoodTimes.setSail();
         expect(hmsGoodTimes.atSea).toBe(true);
     })
-    it("added port to ports visited", ()  => {
-        const hmsGoodTimes = new Ship('Good Times', )
-
-    })
-
-describe("Checks dock function", () => {
-    it("at sea", () => {
-        const ulaanbaatarPort = new Port('Ulaanbaatar')
-        const hmsGoodTimes = new Ship('Good Times', ulaanbaatarPort)
-        const moscowPort = new Port('Moscow');
+    it("added port to ports visited", () => {
+        const ports = new Itinerary([new Port('ShenZen'), new Port('Montenegro')]);
+        const hmsGoodTimes = new Ship('Good Times', ports)
         hmsGoodTimes.setSail();
-        hmsGoodTimes.dock(moscowPort);
-        expect(hmsGoodTimes.atSea).toBe(false);
+        expect(hmsGoodTimes.portsVisited[0]).toStrictEqual(new Port('ShenZen'));
     })
-    it("Current port is docked port", () => {
-        const ulaanbaatarPort = new Port('Ulaanbaatar')
-        const hmsGoodTimes = new Ship('Good Times', ulaanbaatarPort)
-        const moscowPort = new Port('Moscow');
-        hmsGoodTimes.setSail();
-        hmsGoodTimes.dock(moscowPort);
-        expect(hmsGoodTimes.currentPort).toBe(moscowPort);
+
+    describe("Checks dock function", () => {
+        it("dock attempt", () => {
+            const ports = new Itinerary([new Port('Andorra'), new Port('Ulaanbaatar')])
+            const hmsGoodTimes = new Ship('Good Times', ports)
+            hmsGoodTimes.setSail();
+            hmsGoodTimes.dock();
+            expect(hmsGoodTimes.atSea).toBe(false);
+        })
+        it("Current port is docked port", () => {
+            const ports = new Itinerary([new Port('Andorra'), new Port('Ulaanbaatar')])
+            const hmsGoodTimes = new Ship('Good Times', ports);
+            hmsGoodTimes.setSail();
+            hmsGoodTimes.dock();
+            expect(hmsGoodTimes.currentPort).toStrictEqual(new Port('Ulaanbaatar'));
+        })
     })
-    
-})
 });
-
-
-
-/*describe("ship is launched", () => {
-    it("creates an object", () => {
-        const hmsGoodTimes = new Ship;
-        expect(hmsGoodTimes).toBeInstanceOf(Object);
-    });
-
-    it("has a starting port for a ship", () => {
-        const moscow = new Port;
-        const hmsGoodTimes = new Ship(port);
-        expect(hmsGoodTimes.currentPort).toBe(port);
-    });
-});
-
-describe("ship sets sail", () => {
-    it("it is at sea after setSail", () => {
-        const hmsGoodTimes = new Port('Good Times', 'UAE');
-        expect(hmsGoodTimes.setSail).toBeTruthy();
-    });
-    it("at sea", () => {
-        const hmsGoodTimes = new Ship('Good Times', 'Andorra')
-        hmsGoodTimes.setSail();
-        expect(hmsGoodTimes.atSea).toBe(true);
-    });
-});*/
-
-
-
