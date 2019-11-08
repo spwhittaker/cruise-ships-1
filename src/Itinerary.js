@@ -5,4 +5,4 @@ class Itinerary {
         this.ports = ports;
     }
 };
-module.exports = Itinerary;  
+module.exports = Itinerary;

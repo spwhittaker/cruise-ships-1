@@ -12,5 +12,5 @@ describe("itinerary functions", () => {
         const stalingrad = new Port('Stalingrad')
         const itinerary = new Itinerary([leningrad, stalingrad]);
         expect(itinerary.ports).toEqual([leningrad, stalingrad]);
-})
+    })
 });
