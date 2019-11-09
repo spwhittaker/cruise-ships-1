@@ -3,11 +3,15 @@ const Port = require("../src/Port.js");
 const Itinerary = require("../src/Itinerary.js");
 
 describe("ship is created", () => {
+  let testPort1;
+  let testPort2;
   let testItin;
   let hmsGoodTimes;
 
   beforeEach(() => {
-    testItin = new Itinerary([jest.fn(), jest.fn()]);
+    testPort1 = new Port("testPort1");
+    testPort2 = new Port("testPort2");
+    testItin = new Itinerary([testPort1, testPort2]);
     hmsGoodTimes = new Ship("Good Times", testItin);
   });
   it("creates an object", () => {
@@ -39,12 +43,14 @@ describe("ship has a Port object", () => {
 
 describe("ship sets sail", () => {
   let testPort1;
+  let testPort2;
   let testItin;
   let hmsGoodTimes;
 
   beforeEach(() => {
-    testPort1 = jest.fn();
-    testItin = new Itinerary([testPort1, jest.fn()]);
+    testPort1 = new Port("testPort1");
+    testPort2 = new Port("testPort2");
+    testItin = new Itinerary([testPort1, testPort2]);
     hmsGoodTimes = new Ship("Good Times", testItin);
   });
   it("it is at sea after setSail", () => {
@@ -61,11 +67,15 @@ describe("ship sets sail", () => {
 });
 
 describe("Checks ports status", () => {
+  let testPort1;
+  let testPort2;
   let testItin;
   let hmsGoodTimes;
 
   beforeEach(() => {
-    testItin = new Itinerary([jest.fn(), jest.fn()]);
+    testPort1 = new Port("testPort1");
+    testPort2 = new Port("testPort2");
+    testItin = new Itinerary([testPort1, testPort2]);
     hmsGoodTimes = new Ship("Good Times", testItin);
     hmsGoodTimes.setSail();
   });
@@ -80,13 +90,15 @@ describe("Checks ports status", () => {
 });
 
 describe("Checks dock function", () => {
+  let testPort1;
   let testPort2;
   let testItin;
   let hmsGoodTimes;
 
   beforeEach(() => {
-    testPort2 = jest.fn();
-    testItin = new Itinerary([jest.fn(), testPort2]);
+    testPort1 = new Port("testPort1");
+    testPort2 = new Port("testPort2");
+    testItin = new Itinerary([testPort1, testPort2]);
     hmsGoodTimes = new Ship("Good Times", testItin);
     hmsGoodTimes.setSail();
     hmsGoodTimes.dock();
