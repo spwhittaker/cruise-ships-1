@@ -31,6 +31,24 @@ describe("instantiating a ship should add that ship to its starting port", () =>
     const myItin = new Itinerary([port1, port2]);
     const coolShip = new Ship("A Really Cool Ship", myItin);
     expect(port1.ships).toContain(coolShip);
+    expect(coolShip.currentPort).toEqual(port1);
+  });
+});
+
+describe("removeShip", () => {
+  it("should remove the ship", () => {
+    const port1 = new Port("Port 1");
+    const port2 = new Port("Port 2");
+    const port3 = new Port("Port 3");
+    const myItin = new Itinerary([port1, port2]);
+    const myItin1 = new Itinerary([port2, port3]);
+    const coolShip = new Ship("A Really Cool Ship", myItin);
+    const shipHappens = new Ship("Ship Happens", myItin1);
+    port1.removeShip(coolShip);
+    expect(port1.ships.indexOf(coolShip)).toEqual(-1);
+    expect(() => port1.removeShip(shipHappens)).toThrowError(
+      "That ship isn't here"
+    );
   });
 });
 

@@ -67,8 +67,6 @@ describe("ship sets sail", () => {
   it("can't set sail after reaching final port", () => {
     hmsGoodTimes.setSail();
     hmsGoodTimes.dock();
-    console.log("Ports visited: " + hmsGoodTimes.portsVisited.length);
-    console.log("Itinerary length: " + hmsGoodTimes.itinerary.ports.length);
     expect(() => hmsGoodTimes.setSail()).toThrowError(
       "End of itinerary reached"
     );
