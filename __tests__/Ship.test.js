@@ -64,6 +64,22 @@ describe("ship sets sail", () => {
     hmsGoodTimes.setSail();
     expect(hmsGoodTimes.portsVisited[0]).toEqual(testPort1);
   });
+  it("can't set sail after reaching final port", () => {
+    hmsGoodTimes.setSail();
+    hmsGoodTimes.dock();
+    console.log("Ports visited: " + hmsGoodTimes.portsVisited.length);
+    console.log("Itinerary length: " + hmsGoodTimes.itinerary.ports.length);
+    expect(() => hmsGoodTimes.setSail()).toThrowError(
+      "End of itinerary reached"
+    );
+  });
+
+  it("can't set sail while already at sea", () => {
+    hmsGoodTimes.setSail();
+    expect(() => hmsGoodTimes.setSail()).toThrowError(
+      "You can't set sail while already at sea!"
+    );
+  });
 });
 
 describe("Checks ports status", () => {
@@ -98,7 +114,8 @@ describe("Checks dock function", () => {
   beforeEach(() => {
     testPort1 = new Port("testPort1");
     testPort2 = new Port("testPort2");
-    testItin = new Itinerary([testPort1, testPort2]);
+    testPort3 = new Port("testPort3");
+    testItin = new Itinerary([testPort1, testPort2, testPort3]);
     hmsGoodTimes = new Ship("Good Times", testItin);
     hmsGoodTimes.setSail();
     hmsGoodTimes.dock();
@@ -108,5 +125,15 @@ describe("Checks dock function", () => {
   });
   it("Current port is docked port", () => {
     expect(hmsGoodTimes.currentPort).toEqual(testPort2);
+  });
+  it("can't dock while already docked", () => {
+    expect(() => hmsGoodTimes.dock()).toThrowError(
+      "You can't dock while already at a port!"
+    );
+  });
+  it("can dock a second time", () => {
+    hmsGoodTimes.setSail();
+    hmsGoodTimes.dock();
+    expect(hmsGoodTimes.currentPort).toEqual(testPort3);
   });
 });
